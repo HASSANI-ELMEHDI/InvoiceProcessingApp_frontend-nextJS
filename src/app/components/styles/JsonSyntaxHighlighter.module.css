@@ -1,0 +1,30 @@
+.container {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 15px;
+    background-color: #282c34;
+    color: #f8f8f2;
+    border-radius: 5px;
+    overflow: auto,
+  }
+  
+  .string {
+    color: #e09455;
+  }
+  
+  .number {
+    color: darkorange;
+  }
+  
+  .boolean {
+    color: blue;
+  }
+  
+  .null {
+    color: magenta;
+  }
+  
+  .key {
+    color: #53b9e6;
+  }
+  
