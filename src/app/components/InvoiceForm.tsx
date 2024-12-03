@@ -1,30 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
+import {Invoice} from "@/app/utils/interfaces"
 
-interface InvoiceItem {
-  description: string;
-  qty: number;
-  rate: number;
-  total: number;
-}
-
-interface Invoice {
-  id: number;
-  name: string;
-  senderEmail: string;
-  recipientEmail: string;
-  shippingAddress: string;
-  date: string;
-  dueDate: string;
-  invoiceNote: string;
-  items: InvoiceItem[]; // Changed to a list of items
-}
 
 interface InvoiceFormProps {
   invoiceData: Invoice; // Invoice data passed as a prop
 }
 
 const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData }) => {
+
+  useEffect(() => 
+    {
+      console.log("-------------------------- > data",invoiceData);
+    },[])
   return (
 
       <div className="pt-4">

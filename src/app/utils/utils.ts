@@ -1,3 +1,5 @@
+import {InputData,Invoice,InvoiceItem} from "@/app/utils/interfaces"
+
 type SupportedImageTypes =
 	| "image/jpeg"
 	| "image/png"
@@ -13,48 +15,6 @@ export function isSupportedImageType(
 }
 
 
-
-interface InvoiceItem {
-	description: string;
-	qty: number;
-	rate: number;
-	total: number;
-  }
-  
-  interface Invoice {
-	id: number;
-	name: string;
-	senderEmail: string;
-	recipientEmail: string;
-	shippingAddress: string;
-	date: string;
-	dueDate: string;
-	invoiceNote: string;
-	items: InvoiceItem[]; // A list of items
-  }
-  
-  interface MenuItem {
-	cnt: string; // Quantity as string
-	nm: string;  // Item description
-	price: string; // Price as string
-  }
-  
-  interface InputData {
-	data: {
-	  menu: MenuItem[];
-	  sub_total: {
-		etc: string;
-		subtotal_price: string;
-		tax_price: string;
-	  };
-	  total: {
-		cashprice: string;
-		changeprice: string;
-		total_price: string;
-	  };
-	};
-  }
-  
   export function transformData(inputData: InputData): Invoice {
 	// Destructure the input data
 	const { menu, sub_total, total } = inputData.data;

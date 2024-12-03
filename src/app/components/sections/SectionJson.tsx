@@ -24,11 +24,11 @@ export default function SectionJson({
     }
   }
 
-  const loading = !content && !finished;
+  const loading = !finished;
 
   return (
     <div>
-      {content && (
+      {finished && (
         <>
           <button
             className="float-right rounded-md p-1 hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ease-in-out"
@@ -58,7 +58,7 @@ export default function SectionJson({
         </>
       )}
 
-      {content && (
+      {finished && (
         <JsonSyntaxHighlighter json={JSON.stringify(content, null, 2)} />
       )}
 

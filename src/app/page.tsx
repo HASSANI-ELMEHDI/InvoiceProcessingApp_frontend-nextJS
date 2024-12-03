@@ -3,14 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import {  IconLoader2 } from "@tabler/icons-react";
-import { toast } from "sonner";
+//import { toast } from "sonner";
 import Image from "next/image";
 import { isSupportedImageType,transformData } from "@/app/utils/utils";
 import { track } from "@vercel/analytics";
 import { fetchTextAndDescription } from "./services/api";
 import { toBase64 } from "./utils/fileUtils";
 import SectionJson from "./components/sections/SectionJson";
-
+import { toast } from 'react-toastify';
 
 interface InvoiceItem {
 	description: string;
@@ -39,7 +39,9 @@ export default function Home() {
   const [data, setData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [fileUploaded, setFileUploaded] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
 
 
 
@@ -49,7 +51,7 @@ export default function Home() {
 	setText(null);
 	setDescription("");
     if (!file) return;
-
+    setFileUploaded(file);
     if (!isSupportedImageType(file.type)) {
       return toast.error(
         "Unsupported format. Only JPEG, PNG, GIF, and WEBP files are supported."
@@ -70,11 +72,21 @@ export default function Home() {
     setBlobURL(URL.createObjectURL(file));
     setFinished(false);
     setIsLoading(true);
+    setFileUploaded(file);
+    try {
+      const { total, data } = await fetchTextAndDescription(file);
+      setDescription(total);
+      setData(data);
+      setText(transformData(data));
+    } catch (error) {
+      setFileUploaded(null);
+    
+       return toast.error("Failed to fetch data");
+     
+      
+    }
 
-    const { total, data } = await fetchTextAndDescription(file);
-	setDescription(total);
-	setData(data);
-	setText(transformData(data));
+	
     
     setIsLoading(false);
     setFinished(true);
@@ -142,7 +154,7 @@ export default function Home() {
         )}
         onClick={() => inputRef.current?.click()}
       >
-        {blobURL && (
+        {(blobURL && fileUploaded ) && (
           <Image
             src={blobURL}
             unoptimized
@@ -162,7 +174,7 @@ export default function Home() {
   )}
 >
 
-          {isLoading ? (
+          {(isLoading && fileUploaded ) ? (
             <IconLoader2 className="animate-spin size-12" />
           ) : (
             <>
@@ -199,12 +211,16 @@ export default function Home() {
 
       {(isLoading || description || text) && (
 		<>
+		{
+      fileUploaded && (<div className="space-y-3 basis-1/2 p-3 rounded-md bg-gray-100 dark:bg-gray-900 w-full drop-shadow-sm">
+    
+      <SectionJson finished={finished} content={data.data}>
+        JSON
+        </SectionJson>
+       </div>)
+
+    }
 		
-		<div className="space-y-3 basis-1/2 p-3 rounded-md bg-gray-100 dark:bg-gray-900 w-full drop-shadow-sm">
-		<SectionJson finished={finished} content={data.data}>
-			JSON
-		  </SectionJson>
-	   </div>
 		</>
       )}
     </>

@@ -1,4 +1,4 @@
-interface InvoiceItem {
+export interface InvoiceItem {
 	description: string;
 	qty: number;
 	rate: number;
@@ -24,8 +24,50 @@ interface InvoiceItem {
 }
 
 export interface SectionJsonProps {
-    children: string;
-    content?: Invoice | null;
+    children?: React.ReactNode;
+    content?: InputData | null;
     finished: boolean;
   }
   
+
+  export interface TapHolderProps {
+    content?: InputData | null;
+    finished: boolean;
+  }
+  
+
+  
+interface TabItem {
+	title: string;
+	content?: React.ReactNode;
+	disabled?: boolean;
+  }
+  
+  export interface TabsComponentProps {
+	items: TabItem[];
+  }
+
+
+
+
+  
+  interface MenuItem {
+	cnt: string; // Quantity as string
+	nm: string;  // Item description
+	price: string; // Price as string
+  }
+  
+  export interface InputData {
+	  data : { menu: MenuItem[];
+	  sub_total: {
+		etc: string;
+		subtotal_price: string;
+		tax_price: string;
+	  };
+	  total: {
+		cashprice: string;
+		changeprice: string;
+		total_price: string;
+	  };
+	}
+  }
