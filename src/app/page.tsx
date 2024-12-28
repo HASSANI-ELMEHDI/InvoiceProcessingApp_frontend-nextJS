@@ -74,8 +74,8 @@ export default function Home() {
     setIsLoading(true);
     setFileUploaded(file);
     try {
-      const { total, data } = await fetchTextAndDescription(file);
-      setDescription(total);
+      const { data } = await fetchTextAndDescription(file);
+      setDescription("");
       setData(data);
       setText(transformData(data));
     } catch (error) {

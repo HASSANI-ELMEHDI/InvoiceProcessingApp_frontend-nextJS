@@ -1,9 +1,11 @@
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+
 export async function fetchTextAndDescription(file: File) {
     try {
       const formData = new FormData();
       formData.append('image', file);
   
-      const response = await fetch('http://localhost:8080/api/process-image', {
+      const response = await fetch(`${apiBaseUrl}/data`, {
         method: 'POST',
         body: formData
       });
@@ -13,7 +15,7 @@ export async function fetchTextAndDescription(file: File) {
       }
   
       const data = await response.json();
-      return { total: data.data.total.total_price, data: data };
+      return { data: data };
     } catch (error: any) {
       console.error(error);
       throw new Error(error.message || "Something went wrong.");
