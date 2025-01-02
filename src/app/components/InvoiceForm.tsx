@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect } from "react";
 import {Invoice} from "@/app/utils/interfaces"
 
 
@@ -9,10 +8,7 @@ interface InvoiceFormProps {
 
 const InvoiceForm: React.FC<InvoiceFormProps> = ({ invoiceData }) => {
 
-  useEffect(() => 
-    {
-      console.log("-------------------------- > data",invoiceData);
-    },[])
+ 
   return (
 
       <div className="pt-4">
